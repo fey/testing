@@ -12,22 +12,27 @@ jobs:
           else
               echo "ISSUE_TITLE_VALID=false" >> $GITHUB_ENV
           fi
-      - name: Check Issue body
-        run: |
-          shopt -s nocasematch; if [[ "${{ github.event.issue.body }}" =~ (^## Summary$(.|\n)*## Environment$(.|\n)*## Steps to reproduce$(.|\n)*## Expected result$(.|\n)*## Actual result$(.|\n)*$) ]]; then
-              echo "ISSUE_BODY_VALID=true" >> $GITHUB_ENV
-          else
-              echo "ISSUE_BODY_VALID=false" >> $GITHUB_ENV
-          fi
+      # - name: Check Issue body
+      #   run: |
+      #     if [[ "$TEXT" =~ "(^## Summary$(.|\n)*## Environment$(.|\n)*## Steps to reproduce$(.|\n)*## Expected result$(.|\n)*## Actual result$(.|\n)*$" ]]; then
+      #         echo "ISSUE_BODY_VALID=true"
+      #     else
+      #         echo "ISSUE_BODY_VALID=false"
+      #     fi
+
+      - uses: actions-ecosystem/action-regex-match@v2
+        id: regex-match
+        with:
+          text: ${{ github.event.comment.body }}
+          regex: '^## Summary$(.|\n)*## Environment$(.|\n)*## Steps to reproduce$(.|\n)*## Expected result$(.|\n)*## Actual result$(.|\n)*$'
 
       - name: debug
         run: |
-          echo "${{ env.ISSUE_TITLE_VALID }}"
-          echo "${{ env.ISSUE_BODY_VALID }}"
+          echo "${{ steps.regex-match.outputs.match }}"
 
       - name: Create comment
         uses: peter-evans/create-or-update-comment@v2
-        if: ${{ env.ISSUE_BODY_VALID != 'true' }}
+        if: ${{ steps.regex-match.outputs.match != '' }}
         with:
           issue-number: ${{ github.event.issue.number }}
           body: |
