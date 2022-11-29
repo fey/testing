@@ -11,5 +11,5 @@ jobs:
       - name: Automatically close
         uses: lucasbento/auto-close-issues@v1.0.2
         with:
-          github-token: ${{ secrets.token }}
+          github-token: ${{ secrets.TOKEN }}
           issue-close-message: "test"
