@@ -20,9 +20,14 @@ jobs:
               echo "ISSUE_BODY_VALID=false" >> $GITHUB_ENV
           fi
 
+      - name: debug
+        run: |
+          echo "${{ env.ISSUE_TITLE_VALID }}"
+          echo "${{ env.ISSUE_BODY_VALID }}"
+
       - name: Create comment
         uses: peter-evans/create-or-update-comment@v2
-        if: ${{ env.ISSUE_BODY_VALID != 'true' || env.ISSUE_TITLE_VALID != 'true' }}
+        if: ${{ env.ISSUE_BODY_VALID !=}}
         with:
           issue-number: ${{ github.event.issue.number }}
           body: |
