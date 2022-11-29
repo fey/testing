@@ -2,12 +2,12 @@ on:
   issues:
     types: [opened, edited]
 jobs:
-  titlePrefixCheck:
+  check-issue:
     runs-on: ubuntu-latest
     steps:
       - name: Check Issue title
         run: |
-          if [[ "${{ github.event.issue.title }}" =~ ^Bug:* ]]; then
+          if [[ "${{ github.event.issue.title }}" =~ ^Bug:.* ]]; then
               echo "ISSUE_TITLE_VALID=true" >> $GITHUB_ENV
           else
               echo "ISSUE_TITLE_VALID=false" >> $GITHUB_ENV
