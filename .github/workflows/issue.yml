@@ -5,10 +5,26 @@ jobs:
   titlePrefixCheck:
     runs-on: ubuntu-latest
     steps:
-      - if: startsWith(github.event.issue.title, 'ABC-') != 'true'
-        name: Close Issue
-        uses: peter-evans/close-issue@v2
+      # - if: startsWith(github.event.issue.title, 'ABC-') != 'true'
+        # name: Close Issue
+        # uses: peter-evans/close-issue@v2
+        # with:
+        #   comment: |
+        #     Issue title must start with 'ABC-'.
+        #     Auto-closing this issue.
+
+      - name: Create comment
+        uses: peter-evans/create-or-update-comment@v2
         with:
-          comment: |
-            Issue title must start with 'ABC-'.
-            Auto-closing this issue.
+          issue-number: ${{ github.event.issue.id }}
+          body: |
+            This is a multi-line test comment
+            - With GitHub **Markdown** :sparkles:
+            - Created by [create-or-update-comment][1]
+
+            [1]: https://github.com/peter-evans/create-or-update-comment
+
+      # - uses: dessant/label-actions@v2
+      #   with:
+      #     github-token: ${{ github.token }}
+      #     config-path: '.github/label-actions.yml'
