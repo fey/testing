@@ -14,7 +14,7 @@ jobs:
           fi
       - name: Check Issue body
         run: |
-          if [[ "${{ github.event.issue.body }}" =~ (^## Summary$(.|\n)*## Environment$(.|\n)*## Steps to reproduce$(.|\n)*## Expected Result$(.|\n)*## Actual Result$(.|\n)*$) ]]; then
+          shopt -s nocasematch; if [[ "${{ github.event.issue.body }}" =~ (^## Summary$(.|\n)*## Environment$(.|\n)*## Steps to reproduce$(.|\n)*## Expected Result$(.|\n)*## Actual Result$(.|\n)*$) ]]; then
               echo "ISSUE_BODY_VALID=true" >> $GITHUB_ENV
           else
               echo "ISSUE_BODY_VALID=false" >> $GITHUB_ENV
