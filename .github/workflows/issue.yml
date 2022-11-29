@@ -14,7 +14,7 @@ jobs:
           fi
       - name: Check Issue body
         run: |
-          if [[ ${{ github.event.issue.body }} =~ "(^## Summary$(.|\n)*## Environment$(.|\n)*## Steps to reproduce$(.|\n)*## Expected result$(.|\n)*## Actual result$(.|\n)*$" ]]; then
+          if [[ "${{ github.event.issue.body }}" =~ "(^## Summary(.|\n)*## Environment(.|\n)*## Steps to reproduce(.|\n)*## Expected result(.|\n)*## Actual result(.|\n)*)" ]]; then
               echo "ISSUE_BODY_VALID=true"
           else
               echo "ISSUE_BODY_VALID=false"
