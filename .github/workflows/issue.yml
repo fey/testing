@@ -1,15 +1,10 @@
-on:
-  issues:
-    types: [opened, edited]
-
+name: Autocloser
+on: [issues, pull_request]
 jobs:
-  auto_close_issues:
+  autoclose:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v1
-      - name: Automatically close
-        uses: lucasbento/auto-close-issues@v1.0.2
-        with:
-          github-token: ${{ secrets.TOKEN }}
-          issue-close-message: "test"
+    - name: Autoclose issues that did not follow issue template
+      uses: roots/issue-closer@v1.1
+      with:
+        repo-token: ${{ secrets.GITHUB_TOKEN }}
