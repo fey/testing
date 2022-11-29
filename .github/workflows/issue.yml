@@ -11,5 +11,5 @@ jobs:
       - name: Automatically close
         uses: lucasbento/auto-close-issues@v1.0.2
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+          github-token: ${{ secrets.token }}
           issue-close-message: "@${issue.user.login}: hello! :wave:\n\nThis issue is being automatically closed."
