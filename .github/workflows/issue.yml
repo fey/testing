@@ -7,14 +7,14 @@ jobs:
     steps:
       - name: Check Issue title
         run: |
-          if [[ "${{ github.event.issue.number }}" =~ ^Bug:* ]]; then
+          if [[ "${{ github.event.issue.title }}" =~ ^Bug:* ]]; then
               echo "ISSUE_TITLE_VALID=true" >> $GITHUB_ENV
           else
               echo "ISSUE_TITLE_VALID=false" >> $GITHUB_ENV
           fi
       - name: Check Issue body
         run: |
-          if [[ "" =~ (^## Summary$(.|\n)*## Environment$(.|\n)*## Steps to reproduce$(.|\n)*## Expected Result$(.|\n)*## Actual Result$(.|\n)*$) ]]; then
+          if [[ "${{ github.event.issue.body }}" =~ (^## Summary$(.|\n)*## Environment$(.|\n)*## Steps to reproduce$(.|\n)*## Expected Result$(.|\n)*## Actual Result$(.|\n)*$) ]]; then
               echo "ISSUE_BODY_VALID=true"
           else
               echo "ISSUE_BODY_VALID=false"
@@ -22,7 +22,7 @@ jobs:
 
       - name: Create comment
         uses: peter-evans/create-or-update-comment@v2
-        if: env.ISSUE_BODY_VALID != true
+        if: env.ISSUE_BODY_VALID != true && env.ISSUE_TITLE_VALID != true
         with:
           issue-number: ${{ github.event.issue.number }}
           body: |
@@ -39,7 +39,7 @@ jobs:
             Полный перечень шагов для воспроизведения
             ## Expected result
             какой результат должен был быть без ошибки
-            ## Actual result:
+            ## Actual result
             какой результат получился на самом деле
             ```
 
