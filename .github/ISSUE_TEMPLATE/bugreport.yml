@@ -6,27 +6,20 @@ labels: [
 ]
 body:
   - type: textarea
-    id: description
+    id: summary
     attributes:
-      label: "Description"
+      label: "Summary"
       description: Please enter an explicit description of your issue
       placeholder: Short and explicit description of your incident...
     validations:
       required: true
-  - type: input
-    id: reprod-url
-    attributes:
-      label: "Reproduction URL"
-      description: Please enter your GitHub URL to provide a reproduction of the issue
-      placeholder: ex. https://github.com/USERNAME/REPO-NAME
-    validations:
-      required: true
+
   - type: textarea
     id: reprod
     attributes:
       label: "Reproduction steps"
       description: Please enter an explicit description of your issue
-      value: |
+      placeholder: |
         1. Go to '...'
         2. Click on '....'
         3. Scroll down to '....'
@@ -34,24 +27,25 @@ body:
       render: bash
     validations:
       required: true
+
   - type: textarea
-    id: screenshot
+    id: expected-result
     attributes:
-      label: "Screenshots"
-      description: If applicable, add screenshots to help explain your problem.
-      value: |
-        ![DESCRIPTION](LINK.png)
-      render: bash
+      label: "Expected result"
+      description: What the result should have been
+      placeholder: Expected result
     validations:
-      required: false
+      required: true
+
   - type: textarea
-    id: logs
+    id: actual-result
     attributes:
-      label: "Logs"
-      description: Please copy and paste any relevant log output. This will be automatically formatted into code, so no need for backticks.
-      render: bash
+      label: "Actual result"
+      description: What the result really was
+      placeholder: Actual result
     validations:
-      required: false
+      required: true
+
   - type: dropdown
     id: browsers
     attributes:
@@ -64,6 +58,7 @@ body:
         - Safari
         - Microsoft Edge
         - Opera
+
     validations:
       required: false
   - type: dropdown
